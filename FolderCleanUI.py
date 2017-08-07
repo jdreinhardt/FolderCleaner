@@ -1,9 +1,18 @@
 import sys
-import io
-from tkinter import *
-from tkinter import filedialog
-from tkinter import messagebox
+import platform
 import cleaner
+
+if sys.version_info.major >= 3:
+    import io
+    from tkinter import *
+    from tkinter import filedialog
+    from tkinter import messagebox
+else:
+    import StringIO as io
+    from Tkinter import *
+    import tkFileDialog as filedialog
+    import tkMessageBox as messagebox
+
 
 def catchClose():
     outEntry.insert(END, "Nope. Sorry. Close main window to quit\n")
@@ -67,8 +76,11 @@ def startProcess():
 
 root = Tk()
 root.title("Folder Cleaner")
-root.geometry("600x235")
 root.resizable(False, False)
+if platform.system() ==  'Windows':
+    root.geometry("600x235")
+else:
+    root.geometry("800x300")
 
 #Output Window generation
 popup = Toplevel()
@@ -104,27 +116,31 @@ helpMenu.add_command(label="About", command=aboutDialog)
 frame = Frame(root)
 frame.pack()
 
-ent1 = Entry(frame, width=80)
+width = 80
+if platform.system() != 'Windows':
+    width = 70
+
+ent1 = Entry(frame, width=width)
 ent1.grid(row=1, column=0, padx=5, pady=5, ipadx=2, ipady=2)
 browse1 = Button(frame, text="Browse", command=lambda: browseLocation(ent1))
 browse1.grid(row=1, column=1)
 
-ent2 = Entry(frame, width=80)
+ent2 = Entry(frame, width=width)
 ent2.grid(row=2, column=0, padx=5, pady=5, ipadx=2, ipady=2)
 browse2 = Button(frame, text="Browse", command=lambda: browseLocation(ent2))
 browse2.grid(row=2, column=1)
 
-ent3 = Entry(frame, width=80)
+ent3 = Entry(frame, width=width)
 ent3.grid(row=3, column=0, padx=5, pady=5, ipadx=2, ipady=2)
 browse3 = Button(frame, text="Browse", command=lambda: browseLocation(ent3))
 browse3.grid(row=3, column=1)
 
-ent4 = Entry(frame, width=80)
+ent4 = Entry(frame, width=width)
 ent4.grid(row=4, column=0, padx=5, pady=5, ipadx=2, ipady=2)
 browse4 = Button(frame, text="Browse", command=lambda: browseLocation(ent4))
 browse4.grid(row=4, column=1)
 
-ent5 = Entry(frame, width=80)
+ent5 = Entry(frame, width=width)
 ent5.grid(row=5, column=0, padx=5, pady=5, ipadx=2, ipady=2)
 browse5 = Button(frame, text="Browse", command=lambda: browseLocation(ent5))
 browse5.grid(row=5, column=1)
